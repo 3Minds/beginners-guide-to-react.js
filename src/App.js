@@ -1,37 +1,23 @@
 import React from 'react';
 
 class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {items: []}
-    }
-    componentWillMount() {
-        fetch( 'http://swapi.co/api/people/?format=json' )
-            .then( response => response.json() )
-            .then( ({results: items}) => this.setState({items}) )
-    }
-    filter(e) {
-        this.setState({filter: e.target.value})
-    }
     render() {
-        let items = this.state.items
-        if (this.state.filter) {
-            items = items.filter( items =>
-                items.name.toLowerCase()
-                .includes(this.state.filter.toLowerCase())
-            )
-        }
         return (
-            <div>
-                <input type='text'
-                    onChange={this.filter.bind(this)} />
-                {items.map(item =>
-                    <Person key={item.name} person={item} />)}
-            </div>
+            <Parent>
+                <div className='childA'></div>
+                <div className='childB'></div>
+            </Parent>
         )
     }
 }
 
-const Person = (props) => <h4>{props.person.name}</h4>
+class Parent extends React.Component {
+    render() {
+        let items = React.Children
+            .forEach(this.props.children, child => console.log(child.props.className))
+            console.log(items)
+            return null
+    }
+}
 
 export default App
